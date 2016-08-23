@@ -1,0 +1,5 @@
+Crear un segundo nombre para una variable metodo (def)
+alias (res)
+
+Usado para definir una funcion (def)
+def (res)
