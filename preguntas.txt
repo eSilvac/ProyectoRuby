@@ -1,5 +1,14 @@
-Crear un segundo nombre para una variable metodo (def)
-alias(res)
+Cuál es la mejor aerolínea de Colombia? (def)
+Avianca (res)
 
-Usado para definir una funcion (def)
-def (res)
+Cuál es el avión de pasajeros más grande? (def)
+Airbus A380(res)
+
+En qué ciudad se encuentra el aeropuerto más transitado del mundo?(def)
+Atlanta (res)
+
+Cuál es la mejor aerolínea del mundo actualmente?(def)
+Emirates(res)
+
+Cuál es el motor del Airbus A350?(def)
+Rolls Royce Trent XWB (res)

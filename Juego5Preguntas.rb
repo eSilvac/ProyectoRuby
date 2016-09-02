@@ -1,13 +1,17 @@
 require 'io/console'
 
 
-class Juego 
+class Juego
+
 	attr_accessor :cont, :preg, :res
 
-	def initialize(preg,res)
+	attr_reader :juego
+
+	def initialize
 		@cont = 0
-		@preg = preg
-		@res = res
+		@juego = PreguResp.new
+		@preg = @juego.preg
+		@res = @juego.res
 	end
 
 	def actual
@@ -16,14 +20,12 @@ class Juego
 
 	def validacion(resPersona)
 		prueba = @res[cont].to_s
-		if resPersona == prueba
-			puts "que si"	
+		if resPersona.casecmp(prueba) == 0
+			@cont+=1
+			return true	
 		else
-			puts "que no"
+			return false
 		end
-
-		puts @res[cont]
-		puts resPersona
 	end
 end
 
@@ -59,7 +61,8 @@ class PreguResp
 			  	while linea = f1.gets
 			    	if linea.include? "(res)"
 			    		linea.slice! "(res)"
-			    		@res[i] = linea.gsub!(/\s+/, '')
+			    		linea.rstrip!
+			    		@res[i] = linea
 						i+=1 	
 			    	end
 			  	end
@@ -67,34 +70,67 @@ class PreguResp
 		end
 end
 
+class Vidas 
 
-game2 = PreguResp.new
-pregunta = game2.preg
-respuesta = game2.res
+	attr_accessor :numerovidas
+
+	def initialize
+		@numerovidas = ["❤" ,"❤" ,"❤" ,"❤" ,"❤"]
+	end
+
+	def bad
+		@numerovidas.shift
+	end
+
+end
+
+
+
+game1 = Juego.new
+jugador = Vidas.new
+
 contPrincipal = 0
-numeroPregunta = { 0 => "Primera pregunta: "}
+numeroPregunta = { 0 => " Primera pregunta: ", 1 => " Segunda pregunta: ", 2 => " Tercera pregunta: ", 3 => " Cuarta pregunta: ", 4 => " Quinta pregunta: " }
 
 puts ""
-puts "Bienvenido a reto 5, Para jugar, solo ingresa el termino correcto para cada una de las definiciones, Listo? Preciona cualquier caracter para comenzar."
+puts " Bienvenido a reto 5, Para jugar, solo ingresa el término correcto para cada una de las definiciones,tienes 5 vidas... Listo? Presiona cualquier caracter para comenzar."
 STDIN.getch
 
-game1 = Juego.new(pregunta,respuesta)
+
 
 while contPrincipal < 5
+	puts ""	
+	puts "           Numero de Vidas " + jugador.numerovidas.join(" ")
 	puts ""
 	print numeroPregunta[contPrincipal]
-	puts game1.actual
-	print "=>"
+	print game1.actual
+	puts ""
+	print "=> "
 	resPersona = gets.chomp
 		if game1.validacion(resPersona)
+			puts ""
 			puts "Respuesta Correcta!"
 			contPrincipal += 1
 		else
-			puts "Respuesta Incorrecta, vulve a intentar"
+			jugador.bad
+			if jugador.numerovidas == [] 
+				contPrincipal = 7 
+			else	
+				puts "Respuesta Incorrecta, vuelve a intentar"
+			end
+
 		end
 end
 
-game1.actual
+if contPrincipal != 7 
+	puts ""
+	puts "      Felicitaciones, has terminado el Juego."
+	puts ""
+else
+	puts ""
+	puts "      Lo sentimos, has perdido."
+	puts ""
+end
 
 
 
