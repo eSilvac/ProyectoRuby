@@ -1,6 +1,5 @@
 require 'io/console'
 
-
 class Juego
 
 	attr_accessor :cont, :preg, :res
